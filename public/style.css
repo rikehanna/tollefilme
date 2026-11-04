@@ -136,8 +136,8 @@ footer{margin-top:2rem}
 }
 
 .footer-images img {
-  width: 180px;
-  height: 180px;
+  width: 100px;
+  height: 100px;
   object-fit: cover;
   border-radius: 8px;
 }
