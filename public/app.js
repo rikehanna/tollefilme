@@ -15,6 +15,7 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': 
 const fmt = n => String(n).replace('.', ',');           // 7.5 -> "7,5"
 const fill = (v, i) => Math.max(0, Math.min(1, v - i)) * 100; // Füllgrad von Stern i (0-basiert)
 const poster = (id, t) => id ? `<img src="/api/images/${id}" alt="${esc(t)}" loading="lazy">` : 'Kein Bild';
+const TEST_REVIEW_ID = 1;
 
 async function api(url, opts) {
   const r = await fetch(url, opts);
@@ -149,6 +150,33 @@ function openDetail(m) {
       <strong>${fmt(m['r_' + k])} / 10</strong>
       ${k === 'budget' ? `<div class="note"><p><b>Rike:</b> ${esc(m.budget_rike) || '—'}</p><p><b>Hanna:</b> ${esc(m.budget_hanna) || '—'}</p></div>` : ''}
       </li>`).join('')}</ul>`;
+  // Löschbutton nur bei der Test-Bewertung anzeigen
+  if (Number(m.id) === TEST_REVIEW_ID) {
+    const deleteBtn = document.createElement('button');
+
+    deleteBtn.className = 'btn';
+    deleteBtn.textContent = 'Test-Bewertung löschen';
+
+    deleteBtn.addEventListener('click', async () => {
+      if (!confirm('Möchtest du diese Test-Bewertung wirklich löschen?')) {
+        return;
+      }
+
+      try {
+        await api('/api/reviews/' + TEST_REVIEW_ID, {
+          method: 'DELETE'
+        });
+
+        $('#detailModal').close();
+        toast('Test-Bewertung gelöscht');
+        loadReviews();
+      } catch (ex) {
+        toast(ex.message);
+      }
+    });
+
+    $('#detailBody').append(deleteBtn);
+  }
   $('#detailBody').scrollTop = 0;
   $('#detailModal').showModal();
 }
