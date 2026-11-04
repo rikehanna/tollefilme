@@ -145,7 +145,7 @@ function openDetail(m) {
         <p class="desc">${m.description ? esc(m.description) : '<span class="muted">Keine Beschreibung</span>'}</p></div>
     </div>
     ${TEXTS.map(([k, l]) => block(l, m[k])).join('')}
-    <h3 class="sec">Sterne</h3>
+    <h3 class="sec">Overall Rating</h3>
     <ul class="scores">${RATINGS.map(([k, l]) => `<li><span>${l}</span>${starsHtml(m['r_' + k])}
       <strong>${fmt(m['r_' + k])} / 10</strong>
       ${k === 'budget' ? `<div class="note"><p><b>Rike:</b> ${esc(m.budget_rike) || '—'}</p><p><b>Hanna:</b> ${esc(m.budget_hanna) || '—'}</p></div>` : ''}
