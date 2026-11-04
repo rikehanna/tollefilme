@@ -1,7 +1,7 @@
 // Kino-Abend – Frontend (Vanilla JS, alle Daten kommen vom Server)
 
 // >>> HIER deine Kontakt-Mail für den Datenschutz-Bereich eintragen <<<
-const KONTAKT_EMAIL = 'deine-mail@example.com';
+const KONTAKT_EMAIL = 'rikeundhannaskleineseite@gmail.com';
 
 const RATINGS = [['story', 'Storytelling'], ['acting', 'Schauspiel'], ['chem', 'Chemistry'],
   ['side', 'Side Story'], ['music', 'Musik'], ['trash', 'Trashigkeit'], ['budget', 'Budget']];
