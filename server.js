@@ -17,6 +17,7 @@ const db = createClient({
 });
 
 const RATING_KEYS = ['story', 'acting', 'chem', 'side', 'music', 'trash', 'budget'];
+const TEST_REVIEW_ID = 1;
 const TEXT_KEYS = ['description', 'rike', 'hanna', 'parents_dead', 'stay_together', 'insider', 'budget_rike', 'budget_hanna'];
 
 async function initDb() {
@@ -90,6 +91,30 @@ app.get('/api/reviews/:id', wrap(async (req, res) => {
   const r = await db.execute({ sql: 'SELECT * FROM reviews WHERE id = ?', args: [req.params.id] });
   if (!r.rows.length) return res.status(404).json({ error: 'Bewertung nicht gefunden.' });
   res.json(plain(r.rows[0]));
+}));
+
+// Ausschließlich die festgelegte Test-Bewertung löschen
+app.delete('/api/reviews/:id', wrap(async (req, res) => {
+  const id = Number(req.params.id);
+
+  if (id !== TEST_REVIEW_ID) {
+    return res.status(403).json({
+      error: 'Diese Bewertung darf nicht gelöscht werden.'
+    });
+  }
+
+  const result = await db.execute({
+    sql: 'DELETE FROM reviews WHERE id = ?',
+    args: [TEST_REVIEW_ID]
+  });
+
+  if (result.rowsAffected === 0) {
+    return res.status(404).json({
+      error: 'Test-Bewertung nicht gefunden.'
+    });
+  }
+
+  res.json({ ok: true });
 }));
 
 app.post('/api/reviews', upload.single('image'), wrap(async (req, res) => {
