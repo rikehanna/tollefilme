@@ -136,16 +136,16 @@ footer{margin-top:2rem}
 }
 
 .footer-images img {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   object-fit: cover;
   border-radius: 8px;
 }
 
 @media (max-width: 560px) {
   .footer-images img {
-    width: 42%;
-    height: auto;
+    width: 70px;
+    height: 70px;
     aspect-ratio: 1 / 1;
   }
 }
