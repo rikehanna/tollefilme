@@ -148,8 +148,11 @@ function openDetail(m) {
     <h3 class="sec">Overall Rating</h3>
     <ul class="scores">${RATINGS.map(([k, l]) => `<li><span>${l}</span>${starsHtml(m['r_' + k])}
       <strong>${fmt(m['r_' + k])} / 10</strong>
-      ${k === 'budget' ? `<div class="note"><p><b>Rike:</b> ${esc(m.budget_rike) || '—'}</p><p><b>Hanna:</b> ${esc(m.budget_hanna) || '—'}</p></div>` : ''}
-      </li>`).join('')}</ul>`;
+      </li>`).join('')}</ul>
+    <section class="block">
+      <h3>Budget</h3>
+      <p>${esc(m.budget_rike) || '<span class="muted">—</span>'}</p>
+    </section>`;
   // Löschbutton nur bei der Test-Bewertung anzeigen
   if (Number(m.id) === TEST_REVIEW_ID) {
     const deleteBtn = document.createElement('button');
