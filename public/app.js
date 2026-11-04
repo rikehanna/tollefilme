@@ -4,7 +4,7 @@
 const KONTAKT_EMAIL = 'rikeundhannaskleineseite@gmail.com';
 
 const RATINGS = [['story', 'Storytelling'], ['acting', 'Schauspiel'], ['chem', 'Chemistry'],
-  ['side', 'Side Story'], ['music', 'Musik'], ['trash', 'Trashigkeit'], ['budget', 'Budget']];
+  ['side', 'Side Story'], ['music', 'Musik'], ['trash', 'Trashigkeit']];
 const TEXTS = [['rike', 'Rikes Gedanken'], ['hanna', 'Hannas Gedanken'],
   ['parents_dead', 'Wie viele Eltern sind tot? (vor Beginn des Films)'],
   ['stay_together', 'Bleiben sie danach zusammen?'], ['insider', 'Insider aus dem Film']];
@@ -85,14 +85,22 @@ function starInput(key) {
 $('#textFields').innerHTML = TEXTS.map(([k, l]) =>
   `<label for="f_${k}">${l}</label><textarea id="f_${k}" name="${k}" rows="2"></textarea>`).join('');
 RATINGS.forEach(([k, l]) => {
-  const row = document.createElement('div'); row.className = 'rating-row';
+  const row = document.createElement('div');
+  row.className = 'rating-row';
   row.innerHTML = `<label>${l}</label>`;
   row.append(starInput(k));
-  if (k === 'budget') row.insertAdjacentHTML('beforeend',
-    `<label for="f_br">Rikes Begründung (optional)</label><textarea id="f_br" name="budget_rike" rows="2"></textarea>
-     <label for="f_bh">Hannas Begründung (optional)</label><textarea id="f_bh" name="budget_hanna" rows="2"></textarea>`);
   $('#ratingFields').append(row);
 });
+
+// Budget als Textfeld statt Sterne
+const budgetRow = document.createElement('div');
+budgetRow.className = 'rating-row';
+budgetRow.innerHTML = `
+  <label for="f_budget">Budget</label>
+  <textarea id="f_budget" name="budget_rike" rows="3"
+    placeholder="Was denkt ihr über das Budget des Films?"></textarea>
+`;
+$('#ratingFields').append(budgetRow);
 
 $('#newReview').addEventListener('click', () => $('#formModal').showModal());
 
